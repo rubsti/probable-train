@@ -1,0 +1,28 @@
+#!/bin/bash
+
+log_file="action_log.txt"
+tracked_files=("my/php/file.php" "path/to/another/file.txt")
+
+# Function to log an action with a tracked file
+log_action() {
+    local action="$1"
+    local file="$2"
+    local timestamp=$(date +"[%d-%m-%Y]")
+
+    echo "$timestamp $file [$action]" >> "$log_file"
+}
+
+# Function to track file actions
+track_file_actions() {
+    local file="$1"
+    local action="$2"
+
+    if [[ " ${tracked_files[@]} " =~ " $file " ]]; then
+        log_action "$action" "$file"
+    fi
+}
+
+# Example usage
+file="my/php/file.php"
+action="opened"
+track_file_actions "$file" "$action"
